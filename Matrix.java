@@ -16,32 +16,64 @@ public class Matrix{
 	public double getElement(int row,int col){
                return data[row][col];
         }
+        public Matrix add(Matrix mat2){
+        	int i,j;
+        	Matrix sum=new Matrix(rows,columns);
+        	for(i=0;i<sum.rows;i++){
+        	   for(j=0;j<sum.columns;j++){
+        	       sum.data[i][j]=this.data[i][j]+mat2.data[i][j];
+        	   }
+        	}
+        	return sum;
+        }
+        //public Matrix multiply(Matrix mat2){
+        	//int i,j;
 	public static void main(String[] args){
 	      int r,c;
 	      double v;
-              Scanner myobj=new Scanner(System.in);
+              Scanner obj=new Scanner(System.in);
 	      System.out.println("Enter number of rows:");
-	      r=myobj.nextInt();
+	      r=obj.nextInt();
               System.out.println("Enter number of columns:");
-	      c=myobj.nextInt();
-	      Matrix myObj=new Matrix(r,c);
+	      c=obj.nextInt();
+	      Matrix mat=new Matrix(r,c);
 	      System.out.println("Enter the values:");
 	      for(int i=0;i<r;i++){
 	        for(int j=0;j<c;j++){
-		    v=myobj.nextDouble();
-		    myObj.setElement(i,j,v);
+		    v=obj.nextDouble();
+		    mat.setElement(i,j,v);
 		}
 	      }
 	      System.out.println("Matrix values:");
 	      for(int i=0;i<r;i++){
 	        for(int j=0;j<c;j++){
-		    System.out.print(myObj.getElement(i,j)+" ");
+		    System.out.print(mat.getElement(i,j)+" ");
                 }
 		System.out.println();
              }
+             System.out.println("Enter number of rows:");
+	      r=obj.nextInt();
+              System.out.println("Enter number of columns:");
+	      c=obj.nextInt();
+	      Matrix mat2=new Matrix(r,c);
+	      System.out.println("Enter the values:");
+	      for(int i=0;i<r;i++){
+	        for(int j=0;j<c;j++){
+		    v=obj.nextDouble();
+		    mat2.setElement(i,j,v);
+		}
+	      }
+             System.out.println("After matrix addition:");
+             System.out.println();
+             
+             Matrix sum=mat.add(mat2);
+             for(int i=0;i<r;i++){
+                for(int j=0;j<c;j++){
+                    System.out.print(sum.getElement(i,j)+" ");
+                }
+                System.out.println();
+             }
          }
 }	
-              
-	      
-	      
-               
+
+          
