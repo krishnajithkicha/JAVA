@@ -26,6 +26,7 @@ public class Matrix{
         	}
         	return sum;
         }
+<<<<<<< HEAD
         public Matrix multiply(Matrix mat2){
         	int i,j;
 	        Matrix product=new Matrix(rows,columns);
@@ -78,11 +79,35 @@ public class Matrix{
 	      System.out.println("Matrix values:");
 	      for(int i=0;i<r1;i++){
 	        for(int j=0;j<c1;j++){
+=======
+        //public Matrix multiply(Matrix mat2){
+        	//int i,j;
+	public static void main(String[] args){
+	      int r,c;
+	      double v;
+              Scanner obj=new Scanner(System.in);
+	      System.out.println("Enter number of rows:");
+	      r=obj.nextInt();
+              System.out.println("Enter number of columns:");
+	      c=obj.nextInt();
+	      Matrix mat=new Matrix(r,c);
+	      System.out.println("Enter the values:");
+	      for(int i=0;i<r;i++){
+	        for(int j=0;j<c;j++){
+		    v=obj.nextDouble();
+		    mat.setElement(i,j,v);
+		}
+	      }
+	      System.out.println("Matrix values:");
+	      for(int i=0;i<r;i++){
+	        for(int j=0;j<c;j++){
+>>>>>>> 803d285165fca4f71eaa8e60af47f47159f64e3b
 		    System.out.print(mat.getElement(i,j)+" ");
                 }
 		System.out.println();
              }
              System.out.println("Enter number of rows:");
+<<<<<<< HEAD
 	     r2=obj.nextInt();
              System.out.println("Enter number of columns:");
 	     c2=obj.nextInt();
@@ -164,3 +189,30 @@ public class Matrix{
 	   
          }
 }	
+=======
+	      r=obj.nextInt();
+              System.out.println("Enter number of columns:");
+	      c=obj.nextInt();
+	      Matrix mat2=new Matrix(r,c);
+	      System.out.println("Enter the values:");
+	      for(int i=0;i<r;i++){
+	        for(int j=0;j<c;j++){
+		    v=obj.nextDouble();
+		    mat2.setElement(i,j,v);
+		}
+	      }
+             System.out.println("After matrix addition:");
+             System.out.println();
+             
+             Matrix sum=mat.add(mat2);
+             for(int i=0;i<r;i++){
+                for(int j=0;j<c;j++){
+                    System.out.print(sum.getElement(i,j)+" ");
+                }
+                System.out.println();
+             }
+         }
+}	
+
+          
+>>>>>>> 803d285165fca4f71eaa8e60af47f47159f64e3b
