@@ -1,218 +1,408 @@
 import java.util.Scanner;
-public class Matrix{
-	private int rows;
-	private int columns;
-	private double[][] data;
-	private String name;
-	
-	public Matrix(int rows,int columns){
-	       this.rows=rows;
-	       this.columns=columns;	
-	       this.data=new double[rows][columns];
+import java.util.Random;
+public class Matrix {
+    private int rows;
+    private int columns;
+    private double[][] data;
+    private String name;
+    public Matrix(){
+        Random rand=new Random();
+        rows=rand.nextInt(10)+1;
+        columns=rand.nextInt(10)+1;
+        data=new double[rows][columns];
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<columns;j++){
+                double vals=rand.nextDouble(1000.0);
+                this.data[i][j]=vals;
+            }
         }
-        public void setElement(int row,int col,double value){
-	       data[row][col]=value;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<columns;j++){
+                System.out.print(this.data[i][j]+" ");
+            }
+            System.out.println();
         }
-	public double getElement(int row,int col){
-               return data[row][col];
+    }
+    public Matrix(int rows, int columns) {
+        this.rows = rows;
+        this.columns = columns;
+        this.data = new double[rows][columns];
+        
+    }
+    
+    public void setElement(int row, int col, double value) {
+        data[row][col] = value;
+    }
+    
+    public double getElement(int row, int col) {
+        return data[row][col];
+    }
+    
+    public Matrix add(Matrix mat2) {
+        int i, j;
+        Matrix sum = new Matrix(rows, columns);
+        for (i = 0; i < sum.rows; i++) {
+            for (j = 0; j < sum.columns; j++) {
+                sum.data[i][j] = this.data[i][j] + mat2.data[i][j];
+            }
         }
-        public Matrix add(Matrix mat2){
-        	int i,j;
-        	Matrix sum=new Matrix(rows,columns);
-        	for(i=0;i<sum.rows;i++){
-        	   for(j=0;j<sum.columns;j++){
-        	       sum.data[i][j]=this.data[i][j]+mat2.data[i][j];
-        	   }
-        	}
-        	return sum;
-        }
-<<<<<<< HEAD
-        public Matrix multiply(Matrix mat2){
-        	int i,j;
-	        Matrix product=new Matrix(rows,columns);
-	        for(i=0;i<this.rows;i++){
-	           for(j=0;j<mat2.columns;j++){
-			double pro=0;
-			int k;
-			for(k=0;k<this.columns;k++){
-			    pro+=this.data[i][k]*mat2.data[k][j];
-			}
-		        product.setElement(i,j,pro);
-		   }
-		}
- 		return product;
-	}
-	public Matrix subtract(Matrix mat2){
-		Matrix difference=new Matrix(rows,columns);
-		for(int i=0;i<difference.rows;i++){
-		   for(int j=0;j<difference.columns;j++){
-			difference.data[i][j]=this.data[i][j]-mat2.data[i][j];
-		    }
-        	}
-		return difference;
-	}
-	public Matrix transpose(){
-		Matrix transposed=new Matrix(this.columns,this.rows);
-		for(int i=0;i<transposed.rows;i++){
-		   for(int j=0;j<transposed.columns;j++){
-			transposed.setElement(i,j,this.data[j][i]);
-		   }
-		}
-		return transposed;
-	}
-	public static void main(String[] args){
-	      int r1,r2,c1,c2;
-	      double v1,v2;
-              Scanner obj=new Scanner(System.in);
-	      System.out.println("Enter number of rows:");
-	      r1=obj.nextInt();
-              System.out.println("Enter number of columns:");
-	      c1=obj.nextInt();
-	      Matrix mat=new Matrix(r1,c1);
-	      System.out.println("Enter the values:");
-	      for(int i=0;i<r1;i++){
-	        for(int j=0;j<c1;j++){
-		    v1=obj.nextDouble();
-		    mat.setElement(i,j,v1);
-		}
-	      }
-	      System.out.println("Matrix values:");
-	      for(int i=0;i<r1;i++){
-	        for(int j=0;j<c1;j++){
-=======
-        //public Matrix multiply(Matrix mat2){
-        	//int i,j;
-	public static void main(String[] args){
-	      int r,c;
-	      double v;
-              Scanner obj=new Scanner(System.in);
-	      System.out.println("Enter number of rows:");
-	      r=obj.nextInt();
-              System.out.println("Enter number of columns:");
-	      c=obj.nextInt();
-	      Matrix mat=new Matrix(r,c);
-	      System.out.println("Enter the values:");
-	      for(int i=0;i<r;i++){
-	        for(int j=0;j<c;j++){
-		    v=obj.nextDouble();
-		    mat.setElement(i,j,v);
-		}
-	      }
-	      System.out.println("Matrix values:");
-	      for(int i=0;i<r;i++){
-	        for(int j=0;j<c;j++){
->>>>>>> 803d285165fca4f71eaa8e60af47f47159f64e3b
-		    System.out.print(mat.getElement(i,j)+" ");
+        return sum;
+    }
+    
+    public Matrix multiply(Matrix mat2) {
+        int i, j;
+        Matrix product = new Matrix(rows, columns);
+        for (i = 0; i < this.rows; i++) {
+            for (j = 0; j < mat2.columns; j++) {
+                double pro = 0;
+                int k;
+                for (k = 0; k < this.columns; k++) {
+                    pro += this.data[i][k] * mat2.data[k][j];
                 }
-		System.out.println();
-             }
-             System.out.println("Enter number of rows:");
-<<<<<<< HEAD
-	     r2=obj.nextInt();
-             System.out.println("Enter number of columns:");
-	     c2=obj.nextInt();
-	     Matrix mat2=new Matrix(r2,c2);
-	     System.out.println("Enter the values:");
-	     for(int i=0;i<r2;i++){
-	       for(int j=0;j<c2;j++){
-		   v2=obj.nextDouble();
-		   mat2.setElement(i,j,v2);
-		}
-	     }
-	     if(r1==r2 && c1==c2){
+                product.setElement(i, j, pro);
+            }
+        }
+        return product;
+    }
+    
+    public Matrix subtract(Matrix mat2) {
+        Matrix difference = new Matrix(rows, columns);
+        for (int i = 0; i < difference.rows; i++) {
+            for (int j = 0; j < difference.columns; j++) {
+                difference.data[i][j] = this.data[i][j] - mat2.data[i][j];
+            }
+        }
+        return difference;
+    }
 
-	             System.out.println("After matrix addition:");
-        	     System.out.println();
-             
-             	     Matrix sum=mat.add(mat2);
-             	     for(int i=0;i<r1;i++){
-                     for(int j=0;j<c1;j++){
-                        System.out.print(sum.getElement(i,j)+" ");
-                     }
-                     System.out.println();
-                 }
-	     }
-	     else{
-		System.out.println("UNEQUAL ORDER");
-	     }
-	     if(c1==r2){
+    public Matrix transpose() {
+        Matrix transposed = new Matrix(this.columns, this.rows);
+        for (int i = 0; i < transposed.rows; i++) {
+            for (int j = 0; j < transposed.columns; j++) {
+                transposed.setElement(i, j, this.data[j][i]);
+            }
+        }
+        return transposed;
+    }
 
-		 System.out.println("After matrix multiplication:");
-             	 System.out.println();
-             
-                 Matrix product=mat.multiply(mat2);
-                 for(int i=0;i<r1;i++){
-                 for(int j=0;j<c1;j++){
-                     System.out.print(product.getElement(i,j)+" ");
-                 }
-                 System.out.println();
+    public String toString() {
+        String toSt = "";
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.columns; j++) {
+                toSt += this.data[i][j] + " ";
+            }
+        }
+        return toSt;
+    }
+}
+
+class SquareMatrix extends Matrix {
+
+    private int order;
+
+    public SquareMatrix(int size) {
+        super(size, size);
+        order = size;
+
+    }
+
+    public boolean isSymmetric() {
+        Matrix transposing = this.transpose();
+        boolean sym = false;
+        for (int i = 0; i < order; i++) {
+            for (int j = 0; j < order; j++) {
+                if (this.getElement(i, j) != transposing.getElement(i, j)) {
+                    return false;
                 }
-	     }
-	     else{
-		System.out.print("Unequal order");
-	     }
-	     if(r1==r2 && c1==c2){
-                  System.out.println("After matrix subtraction:");
-                  System.out.println();
-             
-                  Matrix difference=mat.subtract(mat2);
-                  for(int i=0;i<r1;i++){
-                  for(int j=0;j<c1;j++){
-                     System.out.print(difference.getElement(i,j)+" ");
-                  }
-                  System.out.println();
+            }
+        }
+        return true;
+    }
+
+    public double determinant() {
+        double result = 0;
+        if(order==1){
+            return this.getElement(0,0);
+        }
+        if(order==2){
+            result=this.getElement(0,0)*this.getElement(1,1)-this.getElement(0,1)*this.getElement(1, 0);
+            return result;
+        }
+        if(order==3){
+            double row1=this.getElement(0,0)*(this.getElement(1,1)*this.getElement(2,2)-this.getElement(1,2)*this.getElement(2,1));
+            double row2=this.getElement(0,1)*(this.getElement(1,0)*this.getElement(2,2)-this.getElement(1,2)*this.getElement(2,0));
+            double row3=this.getElement(0,2)*(this.getElement(1,0)*this.getElement(2,1)-this.getElement(1,1)*this.getElement(2,0));
+            result=row1-row2+row3;
+            return result;
+        }
+        return result;
+    }
+
+    public boolean isSingular() {
+        double det=this.determinant();
+        boolean deter=false;
+        if(det==0){
+            deter=true;   
+        }
+        else{
+            deter=false;
+        }
+        return deter;
+    }
+    public double trace(){
+        double result=0;
+        for(int i=0;i<this.order;i++){
+            for(int j=0;j<this.order;j++){
+                if(i==j){
+                    result+=this.getElement(j, j);
                 }
-	     }
-	     else{
-	        System.out.print("Unequal Order");
-	     }
-	     System.out.println("After matrix transpose:");
-             System.out.println();
-             
-             Matrix transposing1=mat.transpose();
-             for(int i=0;i<c1;i++){
-                for(int j=0;j<r1;j++){
-                    System.out.print(transposing1.getElement(i,j)+" ");
+            }
+        }
+        /*if(order==1){
+            return this.getElement(0,0);
+        }
+        else if(order==2){
+            result=this.getElement(0,0)+this.getElement(1,1);
+        }
+        else if(order==3){
+            result=this.getElement(0,0)+this.getElement(1,1)+this.getElement(2,2);
+        }*/
+        return result;
+    }
+
+
+    public static void main(String[] args) {
+        int r1, r2, c1, c2;
+        double v1, v2;
+        Scanner obj = new Scanner(System.in);
+        System.out.println("Enter number of rows:");
+        r1 = obj.nextInt();
+        System.out.println("Enter number of columns:");
+        c1 = obj.nextInt();
+        Matrix mat = new Matrix(r1, c1);
+        System.out.println("Enter the values:");
+        for (int i = 0; i < r1; i++) {
+            for (int j = 0; j < c1; j++) {
+                v1 = obj.nextDouble();
+                mat.setElement(i, j, v1);
+            }
+        }
+
+        System.out.println("Matrix values:");
+        for (int i = 0; i < r1; i++) {
+            for (int j = 0; j < c1; j++) {
+                System.out.print(mat.getElement(i, j) + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("Enter number of rows:");
+        r2 = obj.nextInt();
+        System.out.println("Enter number of columns:");
+        c2 = obj.nextInt();
+        Matrix mat2 = new Matrix(r2, c2);
+        System.out.println("Enter the values:");
+        for (int i = 0; i < r2; i++) {
+            for (int j = 0; j < c2; j++) {
+                v2 = obj.nextDouble();
+                mat2.setElement(i, j, v2);
+            }
+        }
+        System.out.println("MATRIX ADDITION: \n");
+        if (r1 == r2 && c1 == c2) {
+
+            System.out.println("After matrix addition:");
+            System.out.println();
+
+            Matrix sum = mat.add(mat2);
+            for (int i = 0; i < r1; i++) {
+                for (int j = 0; j < c1; j++) {
+                    System.out.print(sum.getElement(i, j) + " ");
                 }
                 System.out.println();
-             }
-	     System.out.println("After matrix transpose:");
-             System.out.println();
-             
-             Matrix transposing2=mat2.transpose();
-             for(int i=0;i<c2;i++){
-                for(int j=0;j<r2;j++){
-                    System.out.print(transposing2.getElement(i,j)+" ");
-                }
-                System.out.println();
-             }
-	   
-         }
-}	
-=======
-	      r=obj.nextInt();
-              System.out.println("Enter number of columns:");
-	      c=obj.nextInt();
-	      Matrix mat2=new Matrix(r,c);
-	      System.out.println("Enter the values:");
-	      for(int i=0;i<r;i++){
-	        for(int j=0;j<c;j++){
-		    v=obj.nextDouble();
-		    mat2.setElement(i,j,v);
-		}
-	      }
-             System.out.println("After matrix addition:");
-             System.out.println();
-             
-             Matrix sum=mat.add(mat2);
-             for(int i=0;i<r;i++){
-                for(int j=0;j<c;j++){
-                    System.out.print(sum.getElement(i,j)+" ");
-                }
-                System.out.println();
-             }
-         }
-}	
+            }
+        } else {
+            System.out.println("UNEQUAL ORDER \n");
+        }
+        System.out.println("MATRIX MULTIPLICATION \n");
+        if (c1 == r2) {
 
-          
->>>>>>> 803d285165fca4f71eaa8e60af47f47159f64e3b
+            System.out.println("After matrix multiplication:");
+            System.out.println();
+
+            Matrix product = mat.multiply(mat2);
+            for (int i = 0; i < r1; i++) {
+                for (int j = 0; j < c2; j++) {
+                    System.out.print(product.getElement(i, j) + " ");
+                }
+                System.out.println();
+            }
+        } else {
+            System.out.print("Unequal order \n");
+        }
+        System.out.println("MATRIX SUBSTRACTION:");
+        if (r1 == r2 && c1 == c2) {
+            System.out.println("After matrix subtraction:");
+            System.out.println();
+
+            Matrix difference = mat.subtract(mat2);
+            for (int i = 0; i < r1; i++) {
+                for (int j = 0; j < c1; j++) {
+                    System.out.print(difference.getElement(i, j) + " ");
+                }
+                System.out.println();
+            }
+        } else {
+            System.out.print("Unequal Order \n ");
+        }
+
+        System.out.println("After matrix transpose:");
+        System.out.println();
+
+        Matrix transposing1 = mat.transpose();
+        for (int i = 0; i < c1; i++) {
+            for (int j = 0; j < r1; j++) {
+                System.out.print(transposing1.getElement(i, j) + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("After matrix transpose:");
+        System.out.println();
+
+        Matrix transposing2 = mat2.transpose();
+        for (int i = 0; i < c2; i++) {
+            for (int j = 0; j < r2; j++) {
+                System.out.print(transposing2.getElement(i, j) + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("After toString conversion of Matrix 1:");
+        String st1 = mat.toString();
+        System.out.print(st1);
+        System.out.println();
+        System.out.println("After toString conversion of Matrix 2:");
+        String st2 = mat2.toString();
+        System.out.print(st2);
+        System.out.println();
+        //CYCLE 1 QUESTION 2
+        int row,col;
+        System.out.println("Enter the row,column and values separated by space in a line:");
+        String val1=obj.nextLine();
+        String valu[]=val1.split("");
+        int len=valu.length;
+        row=Integer.parseInt(valu[0]);
+        col=Integer.parseInt(valu[1]);
+        Matrix matr=new Matrix(row,col);
+        int start=2;
+        while(start<len){
+            for(int i=0;i<row;i++){
+                for(int j=0;j<col;j++){
+                    double values=Double.parseDouble(valu[start]);
+                    matr.setElement(i,j,values);
+                    start++;
+                }
+            }
+        }
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                System.out.print(matr.getElement(i,j)+" ");
+            }
+            System.out.println();
+        }
+        
+        //CYCLE 1 QUESTION 3
+        /*System.out.println("THE DIFFERENT OPERATIONS ON STRINGS ARE: \n 1.Creating Matrix \n 2.Displaying Matrix \n 3.Calculate Column Sum \n 4.Calculate Row sum \n");
+        int choice;
+        System.out.print("Enter the choice:");
+        choice = obj.nextInt();
+        String ch;
+        System.out.print("Enter yes/no to perform operations on Matrix:");
+        ch = obj.next();
+        while (ch.equals("yes")) {
+            switch (choice) {
+                case 1:
+                    int r,c;
+                    double v;
+                    System.out.println("Enter number of rows:");
+                    r = obj.nextInt();
+                    System.out.println("Enter number of columns:");
+                    c = obj.nextInt();
+                    Matrix matx = new Matrix(r, c);
+                    System.out.println("Enter the values:");
+                    for (int i = 0; i < r; i++) {
+                        for (int j = 0; j < c; j++) {
+                            v = obj.nextDouble();
+                            matx.setElement(i, j, v);
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.println("Matrix values:");
+                    for (int i = 0; i < r; i++) {
+                        for (int j = 0; j < c; j++) {
+                            System.out.print(matx.getElement(i, j) + " ");
+                        }
+                        System.out.println();
+                    }
+                    break;
+                case 3:
+                    int col;
+                    System.out.print("Enter the column to be added:");
+                    col = obj.nextInt();
+                    int col1=col-1;
+                    double colSum=0;
+                    for(int i=0;i<r;i++){
+                        colSum+=matx.getElement(i,col1);
+                    }
+                    System.out.println("Column sum of column "+col+"is:"+colSum);
+                    break;
+                case 4:
+                    int row;
+                    System.out.print("Enter the row to be added:");
+                    row=obj.nextInt();
+                    int row1=row-1;
+                    double rowSum=0;
+                    for(int i=0;i<c;i++){
+                        rowSum+=matx.getElement(row1,i);
+                    }
+                    System.out.println("Row Sum of the row "+row+"is:"+rowSum);
+                    break;
+            }
+        }*/
+        //CYCLE 1 QUESTION 4
+        System.out.println("Randomly Generated Matrix");
+        Matrix matri=new Matrix();
+        //CYCLE 2 QUESTION 1
+        int size;
+        double val;
+        System.out.print("Enter the size:");
+        size = obj.nextInt();
+        SquareMatrix sqm = new SquareMatrix(size);
+        System.out.print("Enter the values:");
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                val = obj.nextDouble();
+                sqm.setElement(i, j, val);
+            }
+        }
+        boolean s = sqm.isSymmetric();
+        if (s == true) {
+            System.out.println("Symmetric");
+        } 
+        else {
+            System.out.println("Non-symmetric");
+        }
+        double det=sqm.determinant();
+        System.out.println("Determinant:"+det);
+        boolean deter=sqm.isSingular();
+        if(deter==true){
+            System.out.println("Singular Matrix");
+        }
+        else{
+            System.out.println("Non-Singular Matrix");
+        }
+        double traces=sqm.trace();
+        System.out.println("Trace:"+traces);
+        
+    }
+}
+
