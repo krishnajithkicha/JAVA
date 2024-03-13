@@ -5,6 +5,8 @@ public class Matrix {
     private int columns;
     private double[][] data;
     private String name;
+    private int UniqueId;
+    private static int objectcount=0;
     public Matrix(){
         Random rand=new Random();
         rows=rand.nextInt(10)+1;
@@ -16,12 +18,16 @@ public class Matrix {
                 this.data[i][j]=vals;
             }
         }
+        UniqueId=++objectcount;
         for(int i=0;i<rows;i++){
             for(int j=0;j<columns;j++){
                 System.out.print(this.data[i][j]+" ");
             }
             System.out.println();
         }
+    }
+    public int getUniqueId(){
+        return UniqueId;
     }
     public Matrix(int rows, int columns) {
         this.rows = rows;
@@ -94,8 +100,9 @@ public class Matrix {
         }
         return toSt;
     }
-}
 
+
+}
 class SquareMatrix extends Matrix {
 
     private int order;
@@ -154,7 +161,7 @@ class SquareMatrix extends Matrix {
         for(int i=0;i<this.order;i++){
             for(int j=0;j<this.order;j++){
                 if(i==j){
-                    result+=this.getElement(j, j);
+                    result+=this.getElement(j,j);
                 }
             }
         }
@@ -169,13 +176,23 @@ class SquareMatrix extends Matrix {
         }*/
         return result;
     }
+}
+class DiagonalMatrix extends SquareMatrix{
+    private double values[];
+    public DiagonalMatrix(int size,double value[]){
+        super(size);
+        this.values=value;
+        for(int i=0;i<size;i++){
+            setElement(i,i,values[i]);
+        }
+    }
 
 
     public static void main(String[] args) {
-        int r1, r2, c1, c2;
-        double v1, v2;
+        /*int r1, r2, c1, c2;
+        double v1, v2;*/
         Scanner obj = new Scanner(System.in);
-        System.out.println("Enter number of rows:");
+        /*System.out.println("Enter number of rows:");
         r1 = obj.nextInt();
         System.out.println("Enter number of columns:");
         c1 = obj.nextInt();
@@ -283,11 +300,12 @@ class SquareMatrix extends Matrix {
         String st2 = mat2.toString();
         System.out.print(st2);
         System.out.println();
+                
         //CYCLE 1 QUESTION 2
-        int row,col;
+       /* int row,col;
         System.out.println("Enter the row,column and values separated by space in a line:");
         String val1=obj.nextLine();
-        String valu[]=val1.split("");
+        String[] valu=val1.split(" ");
         int len=valu.length;
         row=Integer.parseInt(valu[0]);
         col=Integer.parseInt(valu[1]);
@@ -308,25 +326,25 @@ class SquareMatrix extends Matrix {
             }
             System.out.println();
         }
-        
+        */
         //CYCLE 1 QUESTION 3
-        /*System.out.println("THE DIFFERENT OPERATIONS ON STRINGS ARE: \n 1.Creating Matrix \n 2.Displaying Matrix \n 3.Calculate Column Sum \n 4.Calculate Row sum \n");
+        /*System.out.println("THE DIFFERENT OPERATIONS ON MATRIX ARE: \n 1.Creating Matrix \n 2.Displaying Matrix \n 3.Calculate Column Sum \n 4.Calculate Row sum \n 5.Printing Average of All Elements in Matrix \n 6.Checking Diagonal or not \n 7.Exit the program ");
         int choice;
-        System.out.print("Enter the choice:");
-        choice = obj.nextInt();
+        int r=0,c=0;
+        Matrix matx=null;
         String ch;
         System.out.print("Enter yes/no to perform operations on Matrix:");
         ch = obj.next();
         while (ch.equals("yes")) {
-            switch (choice) {
-                case 1:
-                    int r,c;
+            System.out.print("Enter the choice:");
+            choice = obj.nextInt();
+            if(choice==1){
                     double v;
                     System.out.println("Enter number of rows:");
                     r = obj.nextInt();
                     System.out.println("Enter number of columns:");
                     c = obj.nextInt();
-                    Matrix matx = new Matrix(r, c);
+                    matx = new Matrix(r, c);
                     System.out.println("Enter the values:");
                     for (int i = 0; i < r; i++) {
                         for (int j = 0; j < c; j++) {
@@ -334,8 +352,8 @@ class SquareMatrix extends Matrix {
                             matx.setElement(i, j, v);
                         }
                     }
-                    break;
-                case 2:
+            }
+            else if(choice==2){
                     System.out.println("Matrix values:");
                     for (int i = 0; i < r; i++) {
                         for (int j = 0; j < c; j++) {
@@ -343,8 +361,8 @@ class SquareMatrix extends Matrix {
                         }
                         System.out.println();
                     }
-                    break;
-                case 3:
+            }   
+            else if(choice==3){
                     int col;
                     System.out.print("Enter the column to be added:");
                     col = obj.nextInt();
@@ -354,8 +372,8 @@ class SquareMatrix extends Matrix {
                         colSum+=matx.getElement(i,col1);
                     }
                     System.out.println("Column sum of column "+col+"is:"+colSum);
-                    break;
-                case 4:
+            }
+            else if(choice==4){
                     int row;
                     System.out.print("Enter the row to be added:");
                     row=obj.nextInt();
@@ -365,12 +383,49 @@ class SquareMatrix extends Matrix {
                         rowSum+=matx.getElement(row1,i);
                     }
                     System.out.println("Row Sum of the row "+row+"is:"+rowSum);
-                    break;
             }
-        }*/
+            else if(choice==5){
+                int totelmts=r*c;
+                double avg=0;
+                for(int i=0;i<r;i++){
+                    for(int j=0;j<c;j++){
+                        avg+=matx.getElement(i,j);
+                    }
+                }
+                avg/=totelmts;
+                System.out.println("Average of the matrix elements is:"+avg);
+            }
+            else if(choice==6){
+                boolean diagonal=false;
+                for(int i=0;i<r;i++){
+                    for(int j=0;j<c;j++){
+                        if(i!=j && matx.getElement(i,j)==0){
+                            diagonal=true;
+                        }
+                    }
+                }
+                if(diagonal==true){
+                    System.out.println("It is a diagonal matrix");
+                }
+                else{
+                    System.out.println("It is not a diagonal matrix");
+                }
+            }
+            else if(choice==7){
+                System.out.println("THANK YOU");
+            }
+            else{
+                System.out.println("Invalid choice ,kindly enter valid choice");
+            }
+            System.out.print("Enter yes/no to perform operations on Matrix:");
+            ch = obj.next();
+        }  */
         //CYCLE 1 QUESTION 4
-        System.out.println("Randomly Generated Matrix");
-        Matrix matri=new Matrix();
+        /*System.out.println("Randomly Generated Matrix");
+        Matrix matri=new Matrix();*/
+        //CYCLE 1 QUESTION 5
+        /*Matrix mat4=new Matrix();
+        System.out.println("Unique id= "+mat4.getUniqueId());*/
         //CYCLE 2 QUESTION 1
         int size;
         double val;
@@ -403,6 +458,27 @@ class SquareMatrix extends Matrix {
         double traces=sqm.trace();
         System.out.println("Trace:"+traces);
         
+        double value1[];
+        System.out.print("Enter the size:");
+        size=obj.nextInt();
+        System.out.println("Enter the values for the diagonal Matrix");
+        value1=new double[size];
+        for(int i=0;i<size;i++){
+            value1[i]=obj.nextDouble();
+            
+        }
+        DiagonalMatrix dim=new DiagonalMatrix(size,value1);
+        System.out.println("Diagonal Matrix :");
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++){
+                if(i==j){
+                   System.out.print(dim.getElement(i,j)+" ");
+                }
+                else{
+                    System.out.print("0.0 ");
+                }
+            }
+            System.out.println();
+        }
     }
 }
-
